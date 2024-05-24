@@ -1,30 +1,56 @@
-# React + TypeScript + Vite
+# Book Inventory Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An app that allows users to manage and rate books.  It takes an ISBN input, references Library APIs, and displays books in a user-friendly way.
 
-Currently, two official plugins are available:
+It is build using Vite, a lightweight React framework with built-in Typescript support.  It includes SASS/SCSS styling, and is deployed using Netlify.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Starting the Project
 
-## Expanding the ESLint configuration
+To run the project in dev mode, download the reposity and run the following commands:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+```bash
+cd Book-Inventory-Manager
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+npm install
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Building and Deploying the Project
+
+When production-ready, build the project by running the following command:
+
+```bash
+npm run build
+```
+
+This will create or modify the folder `dist`.  You may upload this folder to any deployment website such as Netlify.
+
+## File Structure
+
+```bash
+├── src
+│   ├── assets
+│   ├── components
+│   │   ├── BookInventoryManager.tsx
+│   │   ├── BookSearch.tsx
+│   │   ├── BookDisplay.tsx
+│   ├── styling
+│   │   ├── fonts/
+│   ├── types/
+│   ├── App.tsx
+│   ├── main.tsx
+├── dist (or build)
+├── node_modules
+├── README.md
+├── package.json
+├── index.html
+└── .gitignore
+...
+```
+
+`src/assets` contains all image assets used throughout the project.
+`src/components` contains all Book Components used for main functionality.
+`src/styling` contains fonts and all stylesheets.
+`src/types` contains type information for main Book Types.
+
+Currently, there is no routing structure necessary, so all components are referenced via App.tsx.
