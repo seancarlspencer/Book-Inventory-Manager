@@ -49,8 +49,11 @@ This will create or modify the folder `dist`.  You may upload this folder to any
 ```
 
 `src/assets` contains all image assets used throughout the project.
+
 `src/components` contains all Book Components used for main functionality.
+
 `src/styling` contains fonts and all stylesheets.
+
 `src/types` contains type information for main Book Types.
 
 Currently, there is no routing structure necessary, so all components are referenced via App.tsx.
