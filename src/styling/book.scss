@@ -50,8 +50,15 @@ button {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     background: #212121;
     border-radius: var(--smallBorder);
-    width: 100%;
+    width: 80rem;
+    margin: auto;
     justify-items: center;
+    @include for-size(tablet) {
+        width: 50rem;
+    }
+    @include for-size(phone-sm) {
+        width: 100%;
+    }
     input.search-input {
         width: auto;
         padding: var(--mediumGap);
