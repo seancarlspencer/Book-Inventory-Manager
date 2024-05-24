@@ -41,10 +41,15 @@ const BookSearch: React.FC<BookCompType> = ({ bookList, setBookList }) => {
         try {
             await validateText();
             fetch(`https://openlibrary.org/search.json?isbn=${searchText.replace(/-/g, "")}`)
-                .then((res) => res.json())
+                .then((res) => {
+                    if (res?.ok) {
+                        return res.json();
+                    } else {
+                        throw new Error(`HTTP Response Code: ${res?.status}`);
+                    }
+                })
                 .then((data) => {
                     try {
-                        console.log(data);
                         if (data.numbFound == 0) {
                             throw new Error("Did not find book with matching ISBN");
                         }
