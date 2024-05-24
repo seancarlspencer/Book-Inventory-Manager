@@ -1,0 +1,199 @@
+@import "./global.scss";
+
+.inventory-manager {
+    display: grid;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    gap: var(--largeGap);
+    grid-template-rows: auto 1fr;
+    position: relative;
+}
+
+.title {
+    font-size: calc(1.2 * var(--mediumFont));
+    font-weight: 600;
+    padding: 0px var(--mediumPadding);
+    padding-bottom: var(--largePadding);
+    text-align: center;
+}
+
+button {
+    display: inline-block;
+    padding: var(--mediumPadding) 5rem;
+    border-radius: var(--smallBorder);
+    background-color: var(--buttonColor);
+    text-align: center;
+    border: solid 2px var(--buttonColor);
+    cursor: pointer;
+    font-weight: 600;
+    transition: border 100ms ease-in-out;
+    justify-self: center;
+    &:hover {
+        border-top: solid 2px var(--buttonHighlight);
+        border-left: solid 2px var(--buttonHighlight);
+        transition: border 300ms ease-in-out;
+    }
+}
+
+.error {
+    color: var(--deleteHighlight);
+}
+
+.book-search {
+    display: grid;
+    font-size: var(--mediumFont);
+    padding: var(--largePadding);
+    gap: var(--largeGap);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    background: #212121;
+    border-radius: var(--smallBorder);
+    width: 100%;
+    justify-items: center;
+    input.search-input {
+        width: auto;
+        padding: var(--mediumGap);
+        border-radius: var(--mediumGap);
+        border: none;
+        outline: none;
+        border: solid 2px rgb(111, 111, 111);
+        &::placeholder {
+            opacity: 0.5;
+        }
+        &:focus {
+            border: solid 2px rgb(196, 196, 196);
+            &::placeholder {
+                opacity: 0;
+            }
+        }
+    }
+}
+
+.book-list-area {
+    height: 100%;
+    position: relative;
+    overflow-y: hidden;
+}
+
+.book-list-container {
+    display: grid;
+    position: relative;
+    gap: var(--largeGap);
+    max-height: 100%;
+    overflow-y: auto;
+    padding: var(--largePadding);
+    grid-template-columns: 1fr 1fr;
+    align-items: flex-start;
+    grid-template-rows: min-content;
+    @include for-size(tablet) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.book-container {
+    font-size: var(--mediumFont);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+        "title title"
+        "cover author"
+        "cover isbn"
+        "cover rating"
+        "cover delete";
+    gap: var(--mediumGap);
+    width: 100%;
+    height: 100%;
+    justify-items: center;
+    background: #212121;
+    border-radius: var(--smallBorder);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    padding: var(--mediumPadding);
+    max-width: 50rem;
+    .title {
+        grid-area: title;
+        justify-self: center;
+    }
+    .author {
+        grid-area: author;
+        color: #afafaf;
+    }
+    .isbn {
+        grid-area: isbn;
+        color: #afafaf;
+    }
+    .rating {
+        grid-area: rating;
+    }
+    .cover {
+        grid-area: cover;
+        justify-self: stretch;
+    }
+    .delete {
+        button {
+            grid-area: delete;
+            background-color: var(--deleteColor);
+            border: solid 2px var(--deleteColor);
+            &:hover {
+                border-top: solid 2px var(--deleteHighlight);
+                border-left: solid 2px var(--deleteHighlight);
+                transition: border 300ms ease-in-out;
+            }
+        }
+    }
+    .cover {
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+}
+
+.star-container {
+    display: grid;
+    position: relative;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-self: center;
+    &:hover {
+        .star {
+            filter: grayscale(1) !important;
+        }
+    }
+    --hoverWidth: 20%;
+    @for $i from 2 through 6 {
+        &:has(.star:nth-of-type(#{$i}):hover) {
+            .star-container-hover {
+                width: calc(calc(#{$i} * var(--hoverWidth) - var(--hoverWidth)));
+            }
+        }
+    }
+}
+.star-container-hover {
+    position: absolute;
+    background-image: url("../assets/star.png");
+    width: 0%;
+    top: 0;
+    left: 0;
+    height: 3.5rem;
+    z-index: 10;
+    pointer-events: none;
+    background-size: contain;
+    background-position: center left;
+    background-repeat: repeat-x;
+}
+
+.star {
+    background-image: url("../assets/star.png");
+    width: 3.5rem;
+    height: 3.5rem;
+    z-index: 1;
+    position: relative;
+    background-position: center left;
+    background-size: contain;
+    background-repeat: repeat-x;
+    filter: grayscale(1);
+    cursor: pointer;
+    &.default {
+        filter: grayscale(0);
+    }
+}

@@ -1,0 +1,342 @@
+@charset "utf-8";
+/***
+    The new CSS reset - version 1.8.5 (last updated 14.6.2023)
+    GitHub page: https://github.com/elad2412/the-new-css-reset
+***/
+
+/* noto-sans-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: "Noto Sans";
+    font-style: normal;
+    font-weight: 400;
+    src: url("./font/noto-sans-v36-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* noto-sans-500 - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: "Noto Sans";
+    font-style: normal;
+    font-weight: 500;
+    src: url("./font/noto-sans-v36-latin-500.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* noto-sans-600 - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: "Noto Sans";
+    font-style: normal;
+    font-weight: 600;
+    src: url("./font/noto-sans-v36-latin-600.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* noto-sans-700 - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: "Noto Sans";
+    font-style: normal;
+    font-weight: 700;
+    src: url("./font/noto-sans-v36-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+*:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
+    all: unset;
+    display: revert;
+}
+
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Reapply the pointer cursor for anchor tags */
+a,
+button {
+    cursor: revert;
+}
+
+/* Remove list styles (bullets/numbers) */
+ol,
+ul,
+menu {
+    list-style: none;
+}
+
+/* For images to not be able to exceed their container */
+img {
+    max-inline-size: 100%;
+    max-block-size: 100%;
+}
+
+/* removes spacing between cells in tables */
+table {
+    border-collapse: collapse;
+}
+
+/* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
+input,
+textarea {
+    -webkit-user-select: auto;
+}
+
+/* revert the 'white-space' property for textarea elements on Safari */
+textarea {
+    white-space: revert;
+}
+
+/* minimum style to allow to style meter element */
+meter {
+    -webkit-appearance: revert;
+    appearance: revert;
+}
+
+/* preformatted text - use only for this feature */
+:where(pre) {
+    all: revert;
+}
+
+/* reset default text opacity of input placeholder */
+::placeholder {
+    color: unset;
+}
+
+/* remove default dot (•) sign */
+::marker {
+    content: initial;
+}
+
+/* fix the feature of 'hidden' attribute.
+   display:revert; revert to element instead of attribute */
+:where([hidden]) {
+    display: none;
+}
+
+/* revert for bug in Chromium browsers
+   - fix for the content editable attribute will work properly.
+   - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element */
+:where([contenteditable]:not([contenteditable="false"])) {
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write;
+    overflow-wrap: break-word;
+    -webkit-line-break: after-white-space;
+    -webkit-user-select: auto;
+}
+
+/* apply back the draggable feature - exist only in Chromium and Safari */
+:where([draggable="true"]) {
+    -webkit-user-drag: element;
+}
+
+/* Revert Modal native behavior */
+:where(dialog:modal) {
+    all: revert;
+}
+
+/* Element First Media Queries
+========================================================= */
+
+// A map of breakpoints.
+$breakpoints: (
+    phone-sm: 420px,
+    phone: 767px,
+    tablet: 768px,
+    tablet-lg: 1024px,
+    desktop: 1025px,
+    desktop-rg: 1200px,
+    desktop-md: 1366px,
+    desktop-lg: 1600px,
+);
+
+@mixin for-size($breakpoint, $direction: down) {
+    // If the breakpoint exists in the map.
+    @if map-has-key($breakpoints, $breakpoint) {
+        // Get the breakpoint value.
+        $breakpoint-value: map-get($breakpoints, $breakpoint);
+
+        // Determine the direction and then write the media query.
+        @if $direction == up {
+            @media (min-width: $breakpoint-value) {
+                @content;
+            }
+        } @else if $direction == down {
+            @media (max-width: $breakpoint-value) {
+                @content;
+            }
+        }
+    }
+    // If the breakpoint doesn't exist in the map, pass a manual breakpoint
+    @else {
+        @if $direction == up {
+            @media (min-width: $breakpoint) {
+                @content;
+            }
+        } @else if $direction == down {
+            @media (max-width: $breakpoint) {
+                @content;
+            }
+        }
+    }
+}
+
+@mixin for-size-height($breakpoint, $direction: down) {
+    // If the breakpoint exists in the map.
+    @if map-has-key($breakpoints, $breakpoint) {
+        // Get the breakpoint value.
+        $breakpoint-value: map-get($breakpoints, $breakpoint);
+
+        // Determine the direction and then write the media query.
+        @if $direction == up {
+            @media (min-height: $breakpoint-value) {
+                @content;
+            }
+        } @else if $direction == down {
+            @media (max-height: $breakpoint-value) {
+                @content;
+            }
+        }
+    }
+    // If the breakpoint doesn't exist in the map, pass a manual breakpoint
+    @else {
+        @if $direction == up {
+            @media (min-height: $breakpoint) {
+                @content;
+            }
+        } @else if $direction == down {
+            @media (max-height: $breakpoint) {
+                @content;
+            }
+        }
+    }
+}
+
+:root {
+    --mainBG: #0f0f0f;
+    --mainFont: #f6f6f6;
+
+    --secondaryBG: #212121;
+
+    --buttonColor: #00695f;
+    --buttonHighlight: #009688;
+    --deleteColor: #aa2e25;
+    --deleteHighlight: #f44336;
+
+    --largeFont: 2.4rem;
+    --mediumFont: 1.8rem;
+    --normalFont: 1.4rem;
+    --smallFont: 1rem;
+
+    --largeBorder: 2.4rem;
+    --mediumBorder: 1.2rem;
+    --smallBorder: 0.6rem;
+
+    --largeGap: 1.6rem;
+    --mediumGap: 0.8rem;
+    --smallGap: 0.4rem;
+
+    --largePadding: 1.6rem;
+    --mediumPadding: 0.8rem;
+    --smallPadding: 0.4rem;
+    @include for-size-height(desktop) {
+        --largeBorder: 2rem;
+        --mediumBorder: 1rem;
+        --smallBorder: 0.5rem;
+
+        --largeGap: 1.2rem;
+        --mediumGap: 0.6rem;
+        --smallGap: 0.3rem;
+
+        --largePadding: 1.2rem;
+        --mediumPadding: 0.6rem;
+        --smallPadding: 0.3rem;
+    }
+    @include for-size(desktop) {
+        --largeBorder: 2rem;
+        --mediumBorder: 1rem;
+        --smallBorder: 0.5rem;
+
+        --largeGap: 1.2rem;
+        --mediumGap: 0.6rem;
+        --smallGap: 0.3rem;
+
+        --largePadding: 1.2rem;
+        --mediumPadding: 0.6rem;
+        --smallPadding: 0.3rem;
+    }
+    @include for-size(phone-sm) {
+        --smallFont: 1.4rem;
+    }
+}
+
+html {
+    background: var(--mainBG);
+    color: var(--mainFont);
+    font-family: "Noto Sans";
+    font-size: 10px;
+    height: 100dvh;
+    width: 100dvw;
+    overflow-x: hidden;
+    @include for-size(desktop-lg) {
+        font-size: 9px;
+    }
+    @include for-size-height(desktop-rg) {
+        font-size: 9px;
+    }
+    @include for-size(desktop-md) {
+        font-size: 8px;
+    }
+    @include for-size-height(desktop) {
+        font-size: 8px;
+    }
+    @include for-size(tablet) {
+        font-size: 7px;
+    }
+}
+
+body {
+    background: var(--mainBG);
+    color: var(--mainFont);
+    font-family: "Noto Sans";
+    height: 100dvh;
+    width: 100dvw;
+    display: flex;
+}
+
+#root {
+    width: 100dvw;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    padding: var(--largePadding);
+    width: calc(100dvw - calc(2 * var(--largePadding)));
+    height: calc(100dvh - calc(2 * var(--largePadding)));
+    display: flex;
+    justify-content: center;
+    grid-template-rows: auto 1fr;
+}
+
+/* ===== Scrollbar CSS ===== */
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 1.2rem;
+    border-radius: 500px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--primaryBG);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--secondaryBG);
+    border: 3px solid var(--primaryBG);
+    border-radius: 500px;
+}
+
+*::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+}
